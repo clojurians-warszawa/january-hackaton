@@ -58,3 +58,16 @@
                      (hash-map (first sensor-ids) result)
                      (zipmap sensor-ids result))]
     (into {} (mapv (fn [[k v]] [k (assoc (sensors k) :values v)]) result-map))))
+
+(def data-server-device-hash (build-key "data-server" "device-hash"))
+
+(defn data-server-device-hash-set-key [device-id arduino-id device-type]
+  (wcar* (redis/hset data-server-device-hash device-id {:arduino-id arduino-id
+                                                        :device-type device-type})))
+
+(defn data-server-device-hash-get-by-id [device-id]
+  (wcar* (redis/hget data-server-device-hash device-id)))
+
+(defn data-server-device-hash-get-all []
+  (let [result (wcar* (redis/hgetall data-server-device-hash))]
+    (into {} (mapv vec (partition 2 result)))))
