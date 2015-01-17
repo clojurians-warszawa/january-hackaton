@@ -25,10 +25,8 @@
                  [com.taoensso/carmine "2.9.0"]
                  [clj-http "1.0.1"]]
   :repl-options {:init-ns data-server.app}
-  :plugins [[lein-git-version "0.0.10"]
-            [cider/cider-nrepl "0.7.0"]]
+  :plugins [[cider/cider-nrepl "0.7.0"]]
   :global-vars {*warn-on-reflection* true}
-  :hooks [leiningen.hooks.git-version]
   :main data-server.main
   :profiles {:uberjar {:aot :all}
              :production {:ring {:open-browser? false
