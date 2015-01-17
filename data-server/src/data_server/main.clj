@@ -5,7 +5,8 @@
             [taoensso.encore :refer [parse-int]]
             [cider.nrepl :refer (cider-nrepl-handler)]
             [data-server.app :as app]
-            [data-server.config :as config])
+            [data-server.config :as config]
+            [data-server.arduino-client :as arduino-client])
   (:use ring.adapter.jetty
         ring.middleware.params)
   (:import [java.util Locale]))
@@ -42,6 +43,7 @@
     (config/load-default-config!)
     (if config (config/load-config-from-file! config))
     (config/log-config)
+    (arduino-client/start-arduino-updater-threads)
     (handle-user-supplied-options! options)
     (when nrepl (nrepl/start-server :port nrepl-port :handler cider-nrepl-handler))
     (start-server (parse-int port))

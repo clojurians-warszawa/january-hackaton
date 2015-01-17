@@ -16,7 +16,9 @@
      (throw+ (format "Config file %s does not exist." config-file)))))
 
 (defn load-default-config! []
-  (reset! cfg {:log-api-requests false})) ; place for extending defaults
+  (reset! cfg {:log-api-requests false
+               :redis-host "127.0.0.1"
+               :redis-port 6379})) ; place for extending defaults
 
 (defn get-config-var [arg]
   (@cfg arg))
